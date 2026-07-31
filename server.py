@@ -1,6 +1,6 @@
 import hashlib
 from contextvars import ContextVar
-
+from mcp.server.transport_security import TransportSecuritySettings
 from mcp.server.fastmcp import FastMCP
 
 
@@ -8,13 +8,26 @@ EMAIL = "24f2000062@ds.study.iitm.ac.in".strip().lower()
 
 exam_challenge = ContextVar("exam_challenge", default=None)
 
-
 mcp = FastMCP(
     "IITM Exam Challenge Server",
     stateless_http=True,
     json_response=True,
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=True,
+        allowed_hosts=[
+            "127.0.0.1:*",
+            "localhost:*",
+            "[::1]:*",
+            "mcp-exam-server-nzw4.onrender.com",
+        ],
+        allowed_origins=[
+            "http://127.0.0.1:*",
+            "http://localhost:*",
+            "http://[::1]:*",
+            "https://mcp-exam-server-nzw4.onrender.com",
+        ],
+    ),
 )
-
 
 @mcp.tool()
 async def solve_challenge() -> str:
