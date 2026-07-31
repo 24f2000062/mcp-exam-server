@@ -13,19 +13,7 @@ mcp = FastMCP(
     stateless_http=True,
     json_response=True,
     transport_security=TransportSecuritySettings(
-        enable_dns_rebinding_protection=True,
-        allowed_hosts=[
-            "127.0.0.1:*",
-            "localhost:*",
-            "[::1]:*",
-            "mcp-exam-server-nzw4.onrender.com",
-        ],
-        allowed_origins=[
-            "http://127.0.0.1:*",
-            "http://localhost:*",
-            "http://[::1]:*",
-            "https://mcp-exam-server-nzw4.onrender.com",
-        ],
+        enable_dns_rebinding_protection=False
     ),
 )
 
